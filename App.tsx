@@ -1,21 +1,40 @@
-import {Button, Image, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {Input} from "./shared/ínput/Input";
+import {Button} from "./shared/button/Button";
 import {Colors, Gaps} from "./shared/tokens";
+import {useEffect, useState} from "react";
+import {ErrorNotification} from "./shared/ErrorNotification/ErrorNotification";
 
 export default function App() {
+    const [error, setError] = useState<string | undefined>()
+const alert = () => {
+    setError('Неверный логин либо пароль')
+}
+
+useEffect(() => {
+    const timerId = setTimeout(() => {
+        setError(undefined)
+    }, 3000)
+    return () => {
+        clearTimeout(timerId)
+    }
+}, [error])
+
     return (
+        <>
         <View style={styles.container}>
+            <ErrorNotification error={error}/>
             <View style={styles.content}>
                     <Image resizeMode={'contain'} style={styles.logo} source={require('./assets/logo.png')}/>
                 <View style={styles.inputWrapper}>
                    <Input placeholder={'Email'}/>
-                   <Input placeholder={'Password'}/>
-                    <Button title={'Войти'}/>
+                   <Input isPassword placeholder={'Password'}/>
+                    <Button text={'Войти'} onPress={alert}/>
                 </View>
-                    <Button title={'Восстановить пароль'}/>
+                    <Button text={'Восстановить пароль'}/>
             </View>
-
         </View>
+        </>
     );
 }
 
