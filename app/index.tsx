@@ -1,11 +1,12 @@
-import {Image, StyleSheet, View} from 'react-native';
-import {Input} from "./shared/ínput/Input";
-import {Button} from "./shared/button/Button";
-import {Colors, Gaps} from "./shared/tokens";
+import {Image, StyleSheet, View, Text} from 'react-native';
+import {Input} from "../shared/ínput/Input";
+import {Button} from "../shared/button/Button";
+import {Colors, Gaps} from "../shared/tokens";
 import {useEffect, useState} from "react";
-import {ErrorNotification} from "./shared/ErrorNotification/ErrorNotification";
+import {ErrorNotification} from "../shared/ErrorNotification/ErrorNotification";
+import {Link} from "expo-router";
 
-export default function App() {
+export default function Index() {
     const [error, setError] = useState<string | undefined>()
 const alert = () => {
     setError('Неверный логин либо пароль')
@@ -25,13 +26,13 @@ useEffect(() => {
         <View style={styles.container}>
             <ErrorNotification error={error}/>
             <View style={styles.content}>
-                    <Image resizeMode={'contain'} style={styles.logo} source={require('./assets/logo.png')}/>
+                    <Image resizeMode={'contain'} style={styles.logo} source={require('../assets/logo.png')}/>
                 <View style={styles.inputWrapper}>
                    <Input placeholder={'Email'}/>
                    <Input isPassword placeholder={'Password'}/>
                     <Button text={'Войти'} onPress={alert}/>
                 </View>
-                    <Button text={'Восстановить пароль'}/>
+                <Link href={'/restore'}><Text>Восстановить пароль</Text></Link>
             </View>
         </View>
         </>
